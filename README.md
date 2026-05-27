@@ -72,7 +72,7 @@ It is important to note that this does not represent causality, given that price
 
 <iframe
 
-  src="assets/numCompetitorsCDF.html"
+  src= "assets/numCompetitorsCDF.html"
 
   width="600"
 
@@ -102,15 +102,17 @@ Further refining competition to close similar businesses within the same price r
 ></iframe>
 
 
-The statistics from the Kolmogorov-Smirnov tests are summarized in the table below, only differences which as significant at the 1% level are reported:
+The statistics from the Kolmogorov-Smirnov tests are summarized in the table below, only differences which are significant at the 1% level are reported:
 
-| Average Rating       | Number of Competitors | Number of Competitors within Price Range |
-| -------------------- | --------------------- | ---------------------------------------- |
-| $ vs $$ (0.131)      | $ vs $$ (0.082)       | $ vs $$ (0.057)                          |
-| $ vs $$$ (0.177)     | $ vs $$$ (0.147)      | $ vs $$$ (0.466)                         |
-| $ vs $$$$ (0.320)    |                       | $ vs $$$$ (0.512)                        |
-| $$ vs $$$$ (0.261)   |                       | $$ vs $$$ (0.479)                        |
-| $$$ vs $$$$ (0.201)  |                       | $$ vs $$$$ (0.526)        
+| Average Rating | Number of Competitors | Number of Competitors within Price Range |
+| -------------- | --------------------- | ---------------------------------------- |
+| `$` vs `$$` (0.131)    | `$` vs `$$` (0.082)  | `$` vs `$$` (0.057)   |
+| `$` vs `$$$` (0.177)   | `$` vs `$$$` (0.147) | `$` vs `$$$` (0.466)  |
+| `$` vs `$$$$` (0.320)  |                      | `$` vs `$$$$` (0.512) |
+| `$$` vs `$$$$` (0.261) |                      | `$$` vs `$$$` (0.479) |
+| `$$$` vs `$$$$` (0.201)|                      | `$$` vs `$$$$` (0.526)|
+
+
 ## Ratings Regression Models
 
   
