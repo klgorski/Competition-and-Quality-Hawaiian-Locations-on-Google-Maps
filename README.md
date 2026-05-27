@@ -24,9 +24,18 @@ One important consideration for this dataset is the missingness of various data.
 I test whether different price categories have different distributions of competitors and average ratings and generally find that these different price ranges are different. I run sets of two sample Kolmogorov-Smirnov tests for each set of price categories to compare whether their distributions are the same. I find that the distributions of average rating differ across price categories, particularly very cheap locations have are different from any other category. For example, when compared with the most expensive price category, the cumulative distribution function for average ratings of the least expensive category has a difference of 32 percentage points. 
 
 <iframe
-  src="assets/numCompetitorsCDF.html"
-  width="600"
-  height="450"
+  src="numCompetitorsCDF.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+****
+
+<iframe
+  src="assets/avgRatingsPriceCDFhtml"
+  width="800"
+  height="600"
   frameborder="0"
 ></iframe>
 
