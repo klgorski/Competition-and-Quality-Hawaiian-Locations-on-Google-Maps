@@ -25,8 +25,8 @@ I test whether different price categories have different distributions of compet
 
 <iframe
   src="assets/numCompetitorsCDF.html"
-  width="800"
-  height="600"
+  width="600"
+  height="450"
   frameborder="0"
 ></iframe>
 
