@@ -38,17 +38,8 @@ I test whether different price categories have different distributions of compet
 
   
 
-<iframe
+<iframe src="assets/avgRatingsPriceCDF.html" width="600" height="450" frameborder="0"></iframe>
 
-  src="assets/avgRatingsPriceCDF.html"
-
-  width="600"
-
-  height="450"
-
-  frameborder="0"
-
-></iframe>
 
   
 
@@ -69,18 +60,7 @@ It is important to note that this does not represent causality, given that price
 
   
   
-
-<iframe
-
-  src= "assets/numCompetitorsCDF.html"
-
-  width="600"
-
-  height="450"
-
-  frameborder="0"
-
-></iframe>
+<iframe src="assets/numCompetitorsCDF.html" width="600" height="450" frameborder="0"></iframe>
 
   
 
@@ -89,17 +69,7 @@ It is important to note that this does not represent causality, given that price
   
 Further refining competition to close similar businesses within the same price range. This is important because for many businesses that are similar such as restaurants, based on their price they may not actually be direct competitors. For example, and expensive sit down restaurant should not be considered a direct competitor to a fast food restaurant. Therefore, I examine differences in distributions of number of competitors within the given price range. 
 
-<iframe
-
-  src="assets/numCompetitorsPriceRangeCDF.html"
-
-  width="600"
-
-  height="450"
-
-  frameborder="0"
-
-></iframe>
+<iframe src="assets/numCompetitorsPriceRangeCDF.html" width="600" height="450" frameborder="0"></iframe>
 
 
 The statistics from the Kolmogorov-Smirnov tests are summarized in the table below, only differences which are significant at the 1% level are reported:
