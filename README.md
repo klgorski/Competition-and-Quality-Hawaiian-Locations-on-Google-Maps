@@ -6,11 +6,13 @@
   
   
 
-The primary features which I create are, the close locations, similar locations, and similar and close locations which I classify as a location's "competitors". Since not all locations are businesses, they may not be competitors in the traditional economic sense, however similar attractions such as two waterfalls may still be seen as competing with each other for visitors. First, I measure the distance between locations using haversine distance which calculates the distance between two locations on a sphere using their latitude and longitude, which are the location variables given in the dataset. I then measure "similarity" in locations using the cosine similarity between each location's name, description, and some elements of the miscellaneous information. Particularly I exclude miscellaneous information on accessibility and health and safety, since that information is shared across many unrelated information. Combining this information I create as set of locations that are both similar and close for each location.
+The primary features which I create are, the close locations, similar locations, and similar and close locations which I classify as a location's "competitors". Since not all locations are businesses, they may not be competitors in the traditional economic sense, however similar attractions such as two waterfalls may still be seen as competing with each other for visitors. First, I measure the distance between locations using haversine distance which calculates the distance between two locations on a sphere using their latitude and longitude, which are the location variables given in the dataset. I then measure "similarity" in locations using the cosine similarity between each location's name, description, and some elements of the miscellaneous information. Particularly I exclude miscellaneous information on accessibility and health and safety, since that information is shared across many unrelated information. Combining this information I create as set of locations that are both similar and close for each location. Finally, I filter for locations that are similar and within the same price category, although since many price values are missing this will not be the primary unit for analysis. 
 
-  
+I also clean information like price and zipcode by removing values which should not be in the dataset such as ₩, non-english zip codes, and non-Hawian zipcode. I extracted zipcodes from address information using regular expressions. 
 
-Other useful features about individual reviews is aggregated then merged into the location level dataset. I create features for review count, minimum rating, median rating, and the average rating amongst repeat reviewers who have more than five reviews.
+Other useful features about individual reviews is aggregated then merged into the location level dataset. I create features for review count, minimum rating, median rating, and the average rating amongst repeat reviewers who have more than five reviews. I construct a variable for the average response time of the business owner by taking the difference between the time the review was posted and the response time, then aggregating these differences. 
+
+
 
   
   
@@ -18,9 +20,45 @@ Other useful features about individual reviews is aggregated then merged into th
 
 ## Exploratory Data Analysis
 
+**Univariate Analysis**
+
+I plot the histograms of the four main variables of interest below. 
   
-  
-  
+<iframe src="assets/avgRating.html" width="600" height="450" frameborder="0"></iframe>
+
+The histogram of average ratings shows that on average ratings are relatively high, primarily centered around 4.5 stars with a spike at 5 stars. This could potentially be because many firms leave fake reviews or because people genuinely do rate locations highly. There is likely some form of adverse selection at play; locations which do not perform well are not going to survive and then may not appear in the dataset. 
+
+
+<iframe src="assets/price.html" width="600" height="450" frameborder="0"></iframe>
+
+The most common non-missing price category in the dataset is $$ followed by $. More expensive options are much less common. However, most values in the dataset are missing, which could potentially be problematic when analying interactions with price. 
+
+<iframe src="assets/numCloseLocations.html" width="600" height="450" frameborder="0"></iframe>
+
+There are a significant number of locations with few close locations, however there are also many with a great deal of close locations. This is the expected result in a location like Hawaii, where there are many rural areas with few locations, but also urban areas such as Honolulu where there will be many locations in close proximity. 
+
+<iframe src="assets/numCompetitors.html" width="600" height="450" frameborder="0"></iframe>
+
+Most firms have very few competitors or no competitors which is expected since in most cases there will be only a few similar businesses within a small radius. Notably, there are also a few locations with many competitors; assuming that this location doesn't actually have over a thousand competitors, this reflects the limitations of the cosine similarity methodology in correctly classifying which locations are actually similar to each other. 
+
+**Bivariate Analysis**
+
+I begin by analyzing connections between price range and the number of competitors in the dataset. A bar plot showing the number of competitors by price range is shown below. 
+<iframe src="assets/competitorsbyPriceRange.html" width="600" height="450" frameborder="0"></iframe>
+
+Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increase. The main shift occurs going from $$ to $$$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support a lower number of competitors is correlatated with a higher price. 
+
+Looking at the relationship between average rating and price, bar and density countour plots are shown below. 
+
+<iframe src="assets/ratingCompetitorsBar.html" width="600" height="450" frameborder="0"></iframe>
+
+The bar plot of number of competitors by rating shows that for most of the ratings distribution number of competitors does not differ too much by median. In the top few bars of the ratings distribution there is a difference and reduction in median number of competitors. The may be seen as a counter intuitive result, since you would expect the quality to increase along with number of competitors. This may reflect that the result from the previous plots, since higher priced restaurants have fewer competitors and higher ratings. The bottom of the distribution also as few competitors which is an expected result. 
+
+Further visualizing this relationship, a scatter plot of ratings by number of competitors within the same price range shows a slightly positive trend, although very it is very small. This may indicate there is a relatively small relationship between competition and quality in this dataset. 
+
+
+<iframe src="assets/priceRangeCompetitorsRating.html" width="600" height="450" frameborder="0"></iframe>
+
 
 ## Assessments of Missingness
 
