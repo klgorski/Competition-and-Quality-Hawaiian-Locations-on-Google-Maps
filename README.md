@@ -26,9 +26,25 @@ Other useful features about individual reviews is aggregated then merged into th
 
   
 
-One important consideration for this dataset is the missingness of various data. Particularly, important variables like price and description are mostly missing. However
+One important consideration for this dataset is the missingness of various data. Particularly, important variables like price and description are mostly missing. Notably, for price it is likely that it is not missing at random, locations which have no cost are more likely to be missing than highly expensive restaurants. Even presuming this is not the case, price is missing at random dependent on average rating, with locations around the average rating on average being less missing. This can be seen in the plot below 
+<iframe src="assets/priceNAavgRating.html" width="600" height="450" frameborder="0"></iframe>
 
-  
+Furthermore, a permutation test using Kolmogorov-Smirnov tests provides strong evidence that the data would be MAR. 
+
+An example of data which is likely to be MAR is the text of individual user reviews. This is dependent on the user's rating. I use a similar testing procudure to show that this data is missing at random dependent on the user's rating. Looking at the plot of missing values based on rating it is apparant that reviews with a rating of one have a significantly lower number of missing values for the text of the review. Intuitively, this is because customers with a strong negative opinion are more likely write in their review.
+
+<iframe src="assets/permTestTextRating.html" width="600" height="450" frameborder="0"></iframe>
+
+The distribution of test statistics for the permutation test of missingness by rating is shown below. The plot shows that the simulated test statistics are all very far from the observed test statistic; there clearly is evidence missingness is dependent on rating. 
+
+<iframe src="assets/textNAPermTest.html" width="600" height="450" frameborder="0"></iframe>
+
+I also test whether variables such as the location's hours and miscelaneous information are missing at random or missing completely at random. These variables seem unlikely to be not missing at random since the actual values for this information would not influence the probability of missingness. I test whether these variables are missing dependent on average rating. The results from the permutation tests are shown below 
+
+<iframe src="assets/hoursNAPermTest.html" width="600" height="450" frameborder="0"></iframe>
+<iframe src="assets/miscNAPermTest.html" width="600" height="450" frameborder="0"></iframe>
+
+Average rating seems to be a main determinant of whether many variables are missing. This is intuitively reasonable because locations with higher rating may be more likely to update their information or have customers who update it for them. Other variables such as owners response time to reviews are likely missing dependent on the average rating as well, given that owners with poor ratings are also less likely to engage with reviewers. 
 
 ## Differences in Number of Competitors and Average Rating by Price Category
 
