@@ -48,7 +48,7 @@ I begin by analyzing connections between price range and the number of competito
 
 Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increase. The main shift occurs going from $$ to $$$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support a lower number of competitors is correlatated with a higher price. 
 
-Looking at the relationship between average rating and price, bar and density countour plots are shown below. 
+Looking at the relationship between average rating and price, bar plot is shown below. 
 
 <iframe src="assets/ratingCompetitorsBar.html" width="600" height="450" frameborder="0"></iframe>
 
@@ -58,6 +58,22 @@ Further visualizing this relationship, a scatter plot of ratings by number of co
 
 
 <iframe src="assets/priceRangeCompetitorsRating.html" width="600" height="450" frameborder="0"></iframe>
+
+
+**Aggregates**
+
+Looking at aggregates by price category also yields interesting results, below is an aggregate table of the averages of various numerical variables, aggregated by price category. 
+
+<iframe src="assets/groupbyPrice.html" width="600" height="450" frameborder="0"></iframe>
+
+As expected, average rating increases on average as price increases. Number of reviews also increases, which could reflect that people are enthusiastic to write a review if they have spent lots of money, for example an upscale restaurant. The number of close locations also increases as price increases. This is likely because more expensive locations are going to be in cities, where there are many close locations. On the other hand, number of competitors is generally decreasing as price increases. This aligns with the hypothesis that competition is negatively correlated with price. 
+
+
+Finally, I look at the correlation matrix of all numeric variables in the dataset, the table is shown below
+
+<iframe src="assets/correlationMatrix.html" width="600" height="450" frameborder="0"></iframe>
+
+Some of the significant correlations from this matrix are number of reviews and average rating, which are positively correlated. Number of reviews is also positively correlated with the average response time. Another notable result is that ratings are  negatively correlated with the number of close locations and competitors, but slightly positively correlated with competitors within the same price range. 
 
 
 ## Assessments of Missingness
@@ -84,9 +100,11 @@ I also test whether variables such as the location's hours and miscelaneous info
 
 Average rating seems to be a main determinant of whether many variables are missing. This is intuitively reasonable because locations with higher rating may be more likely to update their information or have customers who update it for them. Other variables such as owners response time to reviews are likely missing dependent on the average rating as well, given that owners with poor ratings are also less likely to engage with reviewers. 
 
-## Differences in Number of Competitors and Average Rating by Price Category
 
-  
+
+## Hypothesis Testing
+
+**Differences in Number of Competitors and Average Rating by Price Category**
 
 I test whether different price categories have different distributions of competitors and average ratings and generally find that these different price ranges are different. I run sets of two sample Kolmogorov-Smirnov tests for each set of price categories to compare whether their distributions are the same. I find that the distributions of average rating differ across price categories, particularly very cheap locations have are different from any other category. For example, when compared with the most expensive price category, the cumulative distribution function for average ratings of the least expensive category has a difference of 32 percentage points.
 
@@ -95,33 +113,19 @@ I test whether different price categories have different distributions of compet
 <iframe src="assets/avgRatingsPriceCDF.html" width="600" height="450" frameborder="0"></iframe>
 
 
-  
-
-****
-
-****
-
-  
 
 I also find deviation in between the distributions of the number of competitors. Again using two sample Kolmogorov-Smirnov tests I find that the distributions differ amongst price categories, particularly, the $ and \$$ distributions and the $ and \$\$$ differ significantly at the one percent significance level. Since the ECDF for $ locations is lower than the others, this would indicate that more of the $ EPDF's mass is concentrated amongst locations with many competitors.
 
 It is important to note that this does not represent causality, given that price is correlated with omitted variables such as location in a city, since cities have more competition due to close proximity, this biases any result. 
 
 
-
-
-
-
-  
   
 <iframe src="assets/numCompetitorsCDF.html" width="600" height="450" frameborder="0"></iframe>
 
-  
 
-****
 
   
-Further refining competition to close similar businesses within the same price range. This is important because for many businesses that are similar such as restaurants, based on their price they may not actually be direct competitors. For example, and expensive sit down restaurant should not be considered a direct competitor to a fast food restaurant. Therefore, I examine differences in distributions of number of competitors within the given price range. 
+Further refining competition to close similar businesses within the same price range. This is important because for many businesses that are similar such as restaurants, based on their price they may not actually be direct competitors. For example, and expensive sit down restaurant should not be considered a direct competitor to a fast food restaurant. Therefore, I examine differences in distributions of number of competitors within the given price range. These results are limited, since as stated before price is potentially not missing at random. 
 
 <iframe src="assets/numCompetitorsPriceRangeCDF.html" width="600" height="450" frameborder="0"></iframe>
 
@@ -139,7 +143,13 @@ The statistics from the Kolmogorov-Smirnov tests are summarized in the table bel
 
 ## Ratings Regression Models
 
-  
-  
+When choosing which location to vist or to purchase from, a consumer may wish to predict what the average rating that location would have, given a set of features including the number of competitors. This is important if a consumer would wish to go to a location which has not been rated before. This is a regression problem with the business's average rating as the response variable. I only use information which would be available in the previously stated situation, meaning I do not use information related to user reported ratings. Therefore, I use information on price, number of competitors, the zipcode of the location, the number of days the business is open, the average number of hours the business is open and other miscelaneous information. I will primarily use the AIC and BIC of the model for distinguishing between models, these metrics work well for assessing the goodness of fit in for the model. 
+
+
+
+
+
+
+
 
 ## Price Classification Models
