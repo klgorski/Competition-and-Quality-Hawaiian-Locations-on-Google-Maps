@@ -141,15 +141,36 @@ The statistics from the Kolmogorov-Smirnov tests are summarized in the table bel
 | \$\$\$ vs \$\$\$\$ (0.201)|                      | \$\$ vs \$\$\$\$ (0.526)|
 
 
-## Ratings Regression Models
+## Closure Classification 
 
-When choosing which location to vist or to purchase from, a consumer may wish to predict what the average rating that location would have, given a set of features including the number of competitors. This is important if a consumer would wish to go to a location which has not been rated before. This is a regression problem with the business's average rating as the response variable. I only use information which would be available in the previously stated situation, meaning I do not use information related to user reported ratings. Therefore, I use information on price, number of competitors, the zipcode of the location, the number of days the business is open, the average number of hours the business is open and other miscelaneous information. I will primarily use the AIC and BIC of the model for distinguishing between models, these metrics work well for assessing the goodness of fit in for the model. 
-
-
+An important consideration for business owners is the risk of closure for their business. Using an information set to predict whether a location will close may be useful for a current or prospective business owner when making decisions. Therefore, I build a binary classification model which predicts whether a location is operating versus permenantly or temporarily closed. As an evaluation metric, I will primarily use F-1 score. This is the best metric because of how it balances precision and recall. Both are important for this problem because you wish to both avoid a closure while also avoiding being overly cautious. I calculate this metric using perfomance on a test set of the data. 
 
 
+**Baseline Model**
+
+As a baseline model for prediction I use logistic regression with price and number of competitors. I chose to one hot encode price category even though it is ordinal because much of the price information is missing; an ordinal encoding would not work since 'missing' does not fit well into the ordinal scheme. I also simply standardize number of competitors. I choose logistic regression as a baseline becausae it is a simple and interpretable model which does not require hyperparameter tuning. The result of this model is a macro f1 score of 0.539, notably dragged down by the f1 score of 0.213 when the model predicts a location is closed. The confusion matrix is shown below.
+
+<iframe src="assets/baselineConfusionMatrix.html" width="600" height="450" frameborder="0"></iframe>
+
+This model performs decently, but is by no means good. About $\frac15$ predictions of closed are correct, meaning it is very bad at characterizing when a location is actually closed. To improve predictions, in the next section I consider adding in more features and different models which may improve predictions. 
 
 
 
 
-## Price Classification Models
+## Final model
+
+When testing models, I add a variety of features from the dataset into these models. I use one hot encodings of categorical variables such as zipcode and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I standardize them before using them for prediction, which is useful for evaluating feature importance. I add numerical variables such as the number of reviews, average rating, number of days open, average house open, number of close locations, and number of competitors within price range. Some of these variables suffer from being near colinear, for example the number of competitors and the number of competitors within price range. In a final model specification, the number of variables will be reduced to account for these multicollinearity issues.  
+
+I now consider several classification models, such as logistic regression, K neighbors classification, decision trees, and random forrest classification on this larger set of features. These models vary significantly in their complexity, interpretability, and performance. Comparing the models, KNN classification performs very poorly, having an F-1 score of 0.144 when predicting closure, mainly due to a very low recall. This means the model heavily underpredicts the business closing, which is particularly bad for this application because it will lead to overconfidence about whether or not the location will succeed.
+
+Logistic regression and decision tree classification perform similarly to each other; both have a macro average arround .5 and similar accuracy and recall. One notable aspect of their performance is that their accuracy is low while the recall is higher for predictions of closed. This would indicate that these models are predicting the business is closed often, but many of these predictions are incorrect. Since I am not only interested in reducing the rate of false negatives, these models are not optimal for the task. 
+
+Finally, the random forest model is the best performing on macro average F1 score across all the model and has the best f1 score when predicting closed specifically. It is also the most balanced model with consistent performance on both precision and recall. Therefore, I proceed using this class of model. 
+
+Random forests have various hyperparameters; tuning them is necessary to gain an optimal model. To find a good set of hyperparameters, I use grid search with five fold cross validation. For number of estimaters, I select from amongst 100,200,300, and 400. For maximum depth, I select from amongst none, 10, and 20. For minimum samples per leaf, I select from 1,3,8,12,15. In this case grid seach looks at each combination of hyperparameters and chooses the model with the best average F1 score under five fold cross validation. This methodology avoids chosing a model which overfits the data with unrealistic hyperparameters. I end up with a max depth of 0, a minimum number of samples per leaf of 8, and a number of estimators of 400. This provides an F1 score on the closed class of 0.342
+
+
+Although this model does a modestly good job at predicting whether a business is closed, it is still far from perfect and isn't able to identify closed businesses the majority of the time. This is not primarily due to the model type or hyperparameter selection, but the relatively weak features which do not have an ideal amount of correlation with the response variable. This is a significant limitation of the model which can only be accounted for by collecting new data or doing more feature engineering. Additionally, the dataset is very unbalanced with a relatively low percentage of locations in the dataset being closed. This makes the binary task difficult, since a business being operational is far more common. These results are also limited to business which have significant information; this model may not generalize to locations which do not have information on their state.
+
+## Fairness Analysis 
+
