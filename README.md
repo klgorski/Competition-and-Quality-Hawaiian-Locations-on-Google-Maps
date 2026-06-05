@@ -32,46 +32,54 @@ I create variables for the number of days the business is open and the average n
 | 0x7c006df045b01715:0xe945c308688e1a46 | ['Ramen restaurant']  |          5   |                1 | nan     | [['Thursday', '11AM–8:30PM'], ['Friday', '11AM–... |
 
 
-| gmap_id                               | MISC                                               | state                   | relative_results                                   | url                                                |   zipcode |
-|:--------------------------------------|:---------------------------------------------------|:------------------------|:---------------------------------------------------|:---------------------------------------------------|----------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  | {'Service options': ['Outdoor seating', 'Takeou... | Closed ⋅ Opens 11AM     | ['0x7c00451360f80cf1:0x930291a38bab3132', '0x7c... | https://www.google.com/maps/place//data=!4m2!3m... |     96762 |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | {'Accessibility': ['Wheelchair accessible entra... | Opens soon ⋅ 8AM        | ['0x7c00155df23846af:0xfbe051d208292028', '0x7c... | https://www.google.com/maps/place//data=!4m2!3m... |     96734 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | {'Service options': ['Curbside pickup', 'Takeou... | Closed ⋅ Opens 11AM Fri | nan                                                | https://www.google.com/maps/place//data=!4m2!3m... |     96793 |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 | {'Service options': ['Curbside pickup', 'No-con... | Open ⋅ Closes 7PM       | nan                                                | https://www.google.com/maps/place//data=!4m2!3m... |     96732 |
-| 0x7c006df045b01715:0xe945c308688e1a46 | {'Service options': ['Takeout', 'Dine-in', 'Del... | Closed ⋅ Opens 11AM     | ['0x7c006df018f6177d:0x9beb6db40fadcb2', '0x7c0... | https://www.google.com/maps/place//data=!4m2!3m... |     96814 |
+| gmap_id                               | url                                                |   zipcode |
+|:--------------------------------------|:---------------------------------------------------|----------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  | https://www.google.com/maps/place//data=!4m2!3m... |     96762 |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | https://www.google.com/maps/place//data=!4m2!3m... |     96734 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | https://www.google.com/maps/place//data=!4m2!3m... |     96793 |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | https://www.google.com/maps/place//data=!4m2!3m... |     96732 |
+| 0x7c006df045b01715:0xe945c308688e1a46 | https://www.google.com/maps/place//data=!4m2!3m... |     96814 |
 
 
-| gmap_id                               | closeLocations                                     |   numCloseLocations | textInfoCombined                                   | similarLocations                                   | competitors                                        |
-|:--------------------------------------|:---------------------------------------------------|--------------------:|:---------------------------------------------------|:---------------------------------------------------|:---------------------------------------------------|
-| 0x7c00456eecad3111:0x8217f9600c51f33  | [['0x7c0045691b9c528d:0x3e845bb85fb2e7d7' 0.456... |                  74 | Hale Pops  Outdoor seating Takeout Delivery Lun... | ['0x7954d370921ff6bd:0x3193ba783e26d032', '0x7c... | ['0x7c00456924310067:0x38a12cfc44bec058', '0x7c... |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | [['0x7c001539ceab03cb:0x5675966bbb2d9542' 1.168... |                  83 | SMP - Single Marine Program                        | ['0x7c07a977e68506dd:0xe786233fe66435a5', '0x7c... | []                                                 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | [['0x7954d30aed2259cf:0x3032e1e2429eaa85' 1.763... |                  32 | 2 Cheesy Guys  Curbside pickup Takeout             | ['0x7954d370921ff6bd:0x3193ba783e26d032', '0x7c... | []                                                 |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 | [['0x7954d2debd4d5355:0x9c17afdd76f81793' 1.971... |                 473 | Kraken Coffee Kahului  Curbside pickup No-conta... | ['0x7c00456eecad3111:0x8217f9600c51f33', '0x795... | ['0x7954d2c01aed2bcf:0x7c49262729c9c421', '0x79... |
-| 0x7c006df045b01715:0xe945c308688e1a46 | [['0x7c006de89f2d86e1:0x23d998532e9317a6' 1.120... |                2550 | Akasatana Ramen Kyoto  Takeout Dine-in Delivery... | ['0x7c00456eecad3111:0x8217f9600c51f33', '0x795... | ['0x7c006dee35049c21:0xfc2e9fbd1dbed7e8', '0x7c... |
+| gmap_id                               | MISC                                               | state                   | relative_results                                   |
+|:--------------------------------------|:---------------------------------------------------|:------------------------|:---------------------------------------------------|
+| 0x7c00456eecad3111:0x8217f9600c51f33  | {'Service options': ['Outdoor seating', 'Takeou... | Closed ⋅ Opens 11AM     | ['0x7c00451360f80cf1:0x930291a38bab3132', '0x7c... |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | {'Accessibility': ['Wheelchair accessible entra... | Opens soon ⋅ 8AM        | ['0x7c00155df23846af:0xfbe051d208292028', '0x7c... |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | {'Service options': ['Curbside pickup', 'Takeou... | Closed ⋅ Opens 11AM Fri | nan                                                |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | {'Service options': ['Curbside pickup', 'No-con... | Open ⋅ Closes 7PM       | nan                                                |
+| 0x7c006df045b01715:0xe945c308688e1a46 | {'Service options': ['Takeout', 'Dine-in', 'Del... | Closed ⋅ Opens 11AM     | ['0x7c006df018f6177d:0x9beb6db40fadcb2', '0x7c0... |
 
-| gmap_id                               |   numCompetitors | CompetitorsPriceRange                              |   numCompetitorsPriceRange |   reviewCount |   minRating |
-|:--------------------------------------|-----------------:|:---------------------------------------------------|---------------------------:|--------------:|------------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  |               14 | []                                                 |                          0 |           nan |         nan |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |                0 | []                                                 |                          0 |            20 |           1 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |                0 | []                                                 |                          0 |           nan |         nan |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 |               93 | ['0x7954d2c0e04c1e7f:0x41f080467ecda138', '0x79... |                         16 |           nan |         nan |
-| 0x7c006df045b01715:0xe945c308688e1a46 |              646 | []                                                 |                          0 |           nan |         nan |
+| gmap_id                               | closeLocations                                     |   numCloseLocations | textInfoCombined                                   |
+|:--------------------------------------|:---------------------------------------------------|--------------------:|:---------------------------------------------------|
+| 0x7c00456eecad3111:0x8217f9600c51f33  | [['0x7c0045691b9c528d:0x3e845bb85fb2e7d7' 0.456... |                  74 | Hale Pops  Outdoor seating Takeout Delivery Lun... |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | [['0x7c001539ceab03cb:0x5675966bbb2d9542' 1.168... |                  83 | SMP - Single Marine Program                        |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | [['0x7954d30aed2259cf:0x3032e1e2429eaa85' 1.763... |                  32 | 2 Cheesy Guys  Curbside pickup Takeout             |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | [['0x7954d2debd4d5355:0x9c17afdd76f81793' 1.971... |                 473 | Kraken Coffee Kahului  Curbside pickup No-conta... |
+| 0x7c006df045b01715:0xe945c308688e1a46 | [['0x7c006de89f2d86e1:0x23d998532e9317a6' 1.120... |                2550 | Akasatana Ramen Kyoto  Takeout Dine-in Delivery... |
 
-| gmap_id                               |   medianRating |   avgResponseTime |   avgRatingRepeatReviewer | ruralUrbanClass   |   daysOpen |
-|:--------------------------------------|---------------:|------------------:|--------------------------:|:------------------|-----------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  |            nan |               nan |                       nan | Semi-Urban        |          6 |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |              5 |               nan |                         4 | Urban             |          7 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |            nan |               nan |                       nan | Urban             |          4 |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 |            nan |               nan |                       nan | Urban             |          7 |
-| 0x7c006df045b01715:0xe945c308688e1a46 |            nan |               nan |                       nan | Urban             |          7 |
+| gmap_id                               | similarLocations                                   | competitors                                        |   numCompetitors |
+|:--------------------------------------|:---------------------------------------------------|:---------------------------------------------------|-----------------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  | ['0x7954d370921ff6bd:0x3193ba783e26d032', '0x7c... | ['0x7c00456924310067:0x38a12cfc44bec058', '0x7c... |               14 |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | ['0x7c07a977e68506dd:0xe786233fe66435a5', '0x7c... | []                                                 |                0 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | ['0x7954d370921ff6bd:0x3193ba783e26d032', '0x7c... | []                                                 |                0 |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | ['0x7c00456eecad3111:0x8217f9600c51f33', '0x795... | ['0x7954d2c01aed2bcf:0x7c49262729c9c421', '0x79... |               93 |
+| 0x7c006df045b01715:0xe945c308688e1a46 | ['0x7c00456eecad3111:0x8217f9600c51f33', '0x795... | ['0x7c006dee35049c21:0xfc2e9fbd1dbed7e8', '0x7c... |              646 |
 
-| gmap_id                               |   avgHoursOpen |   isClosed |
-|:--------------------------------------|---------------:|-----------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  |         9      |          0 |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |        11.2857 |          0 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |         6.25   |          0 |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 |        12.5    |          0 |
-| 0x7c006df045b01715:0xe945c308688e1a46 |         9.5    |          0 |
+| gmap_id                               | CompetitorsPriceRange                              |   numCompetitorsPriceRange |   reviewCount |   minRating |   medianRating |
+|:--------------------------------------|:---------------------------------------------------|---------------------------:|--------------:|------------:|---------------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  | []                                                 |                          0 |           nan |         nan |            nan |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | []                                                 |                          0 |            20 |           1 |              5 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | []                                                 |                          0 |           nan |         nan |            nan |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | ['0x7954d2c0e04c1e7f:0x41f080467ecda138', '0x79... |                         16 |           nan |         nan |            nan |
+| 0x7c006df045b01715:0xe945c308688e1a46 | []                                                 |                          0 |           nan |         nan |            nan |
+
+| gmap_id                               |   avgResponseTime |   avgRatingRepeatReviewer | ruralUrbanClass   |   daysOpen |   avgHoursOpen |   isClosed |
+|:--------------------------------------|------------------:|--------------------------:|:------------------|-----------:|---------------:|-----------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  |               nan |                       nan | Semi-Urban        |          6 |         9      |          0 |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |               nan |                         4 | Urban             |          7 |        11.2857 |          0 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |               nan |                       nan | Urban             |          4 |         6.25   |          0 |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 |               nan |                       nan | Urban             |          7 |        12.5    |          0 |
+| 0x7c006df045b01715:0xe945c308688e1a46 |               nan |                       nan | Urban             |          7 |         9.5    |          0 |
 
 **Univariate Analysis**
 
