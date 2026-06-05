@@ -1,8 +1,7 @@
 title: Competition and Quality of Hawaiian Locations on Google Maps
 description: >-
-  Using Google Maps data to examine how competition — proximity to similar
-  businesses — affects price and average rating. A final project for
-  Data Science 80 at UC San Diego.
+  This project examines risk of closure using Google Maps location data. The project seeks to understand how closure correlates with other variables of interest such as price and number of competitors and create a model for predicting closure.
+  This is a final project for Data Science 80 at UC San Diego.
 remote_theme: pages-themes/slate@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
