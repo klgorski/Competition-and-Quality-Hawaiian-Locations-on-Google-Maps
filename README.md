@@ -143,16 +143,57 @@ Further visualizing this relationship, a scatter plot of ratings by number of co
 
 **Aggregates**
 
-Looking at aggregates by price category also yields interesting results, below is an aggregate table of the averages of various numerical variables, aggregated by price category. 
 
-<iframe src="assets/groupbyPrice.html" width="600" height="450" frameborder="0"></iframe>
+I also look at aggregates of various numerical variables by price categories. Below is an aggregate table of the averages for key variable, grouped by closure status.
+
+
+|   isClosed |   avg_rating |   num_of_reviews |   numCloseLocations |   numCompetitors |   numCompetitorsPriceRange |   avgRatingRepeatReviewer |
+|-----------:|-------------:|-----------------:|--------------------:|-----------------:|---------------------------:|--------------------------:|
+|          0 |      4.35497 |         152.754  |             620.559 |          73.3215 |                    3.0586  |                   4.38421 |
+|          1 |      4.19948 |          58.7924 |             925.763 |          64.7316 |                    2.81145 |                   4.24305 |
+
+Looking at this table, it is apparant that the average rating and the number of reviews is lower for closed businesses. Closed businesses also have many more close locations, but fewer competitors. This may contradict the hypothesis that competition predicts closure, or it could the result of an omitted variable.  
+
+
+Looking at aggregates by price category also yields interesting results, below is an aggregate table of the averages of various numerical variables, grouped by price category. 
+
+| price   |   avg_rating |   num_of_reviews |   numCloseLocations |   numCompetitors |   numCompetitorsPriceRange |   avgRatingRepeatReviewer |
+|:--------|-------------:|-----------------:|--------------------:|-----------------:|---------------------------:|--------------------------:|
+| $       |      4.14963 |          253.112 |             709.056 |         150.522  |                   15.9227  |                   4.22675 |
+| $$      |      4.22167 |          373.789 |             796.37  |         133.881  |                   18.8965  |                   4.29488 |
+| $$$     |      4.28697 |          333.218 |             987.5   |         108.416  |                    1.92437 |                   4.3412  |
+| $$$$    |      4.42479 |          410.299 |            1357.21  |         114.675  |                    1.2906  |                   4.50137 |
+| missing |      4.37477 |          103.853 |             611.981 |          57.3987 |                    0       |                   4.41803 |
+
+
 
 As expected, average rating increases on average as price increases. Number of reviews also increases, which could reflect that people are enthusiastic to write a review if they have spent lots of money, for example an upscale restaurant. The number of close locations also increases as price increases. This is likely because more expensive locations are going to be in cities, where there are many close locations. On the other hand, number of competitors is generally decreasing as price increases. This aligns with the hypothesis that competition is negatively correlated with price. 
 
 
 Finally, I look at the correlation matrix of all numeric variables in the dataset, the table is shown below
+|                   |   latitude |   longitude |   avg_rating |   num_of_reviews |   numCloseLocations |   numCompetitors |
+|:------------------|-----------:|------------:|-------------:|-----------------:|--------------------:|-----------------:|
+| latitude          |  1         | -0.799411   |   -0.0505116 |       0.0109798  |           0.162997  |       0.0105284  |
+| longitude         | -0.799411  |  1          |    0.0478632 |      -0.00831672 |          -0.152572  |      -0.00496762 |
+| avg_rating        | -0.0505116 |  0.0478632  |    1         |       0.022655   |          -0.102559  |      -0.00574929 |
+| num_of_reviews    |  0.0109798 | -0.00831672 |    0.022655  |       1          |           0.0177304 |       0.0564894  |
+| numCloseLocations |  0.162997  | -0.152572   |   -0.102559  |       0.0177304  |           1         |       0.0417118  |
 
-<iframe src="assets/correlationMatrix.html" width="600" height="450" frameborder="0"></iframe>
+|                   |   numCompetitorsPriceRange |   reviewCount |   minRating |   medianRating |   avgResponseTime |   avgRatingRepeatReviewer |
+|:------------------|---------------------------:|--------------:|------------:|---------------:|------------------:|--------------------------:|
+| latitude          |                 0.00988639 |     0.0091602 |  -0.0309636 |    -0.085764   |         0.0191386 |                -0.0790339 |
+| longitude         |                -0.00761741 |    -0.0099879 |   0.0354586 |     0.0973149  |        -0.0235953 |                 0.0886897 |
+| avg_rating        |                -0.0501929  |     0.0162932 |   0.414606  |     0.677001   |        -0.046816  |                 0.869965  |
+| num_of_reviews    |                 0.121231   |     0.938328  |  -0.215394  |     0.00639691 |         0.101079  |                 0.0263627 |
+| numCloseLocations |                 0.0280777  |     0.0184497 |  -0.0749525 |    -0.113109   |         0.0182418 |                -0.139208  |
+
+|                   |   daysOpen |   avgHoursOpen |   isClosed |
+|:------------------|-----------:|---------------:|-----------:|
+| latitude          |  0.0398374 |      0.0292882 |  0.0237229 |
+| longitude         | -0.0287897 |     -0.0343694 | -0.0220442 |
+| avg_rating        | -0.0256825 |     -0.135978  | -0.0736397 |
+| num_of_reviews    |  0.0836683 |      0.072827  | -0.060047  |
+| numCloseLocations |  0.117039  |     -0.0495687 |  0.101524  |
 
 Some of the significant correlations from this matrix are number of reviews and average rating, which are positively correlated. Number of reviews is also positively correlated with the average response time. Another notable result is that ratings are  negatively correlated with the number of close locations and competitors, but slightly positively correlated with competitors within the same price range. 
 
