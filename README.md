@@ -285,12 +285,12 @@ An important consideration for business owners is the risk of closure for their 
 
 As a baseline model for prediction I use logistic regression with price and number of competitors. I chose to not include variables such as the number of days the location is open and it's average hours, since naturally closed business will have no days open. The information that the location has no days open would not be available at time of prediction, so I do not include it. I chose to one hot encode price category even though it is ordinal because much of the price information is missing; an ordinal encoding would not work since 'missing' does not fit well into the ordinal scheme. I also simply standardize number of competitors which is a numerical variable. I choose logistic regression as a baseline becausae it is a simple and interpretable model which does not require hyperparameter tuning. The result of this model is a macro f1 score of 0.539, notably dragged down by the f1 score of 0.213 when the model predicts a location is closed. The confusion matrix is shown below.
 
-<iframe src="assets/baselineConfusionMatrix.html" width="600" height="450" frameborder="0"></iframe>
+|                |   Predict Operating |   Predict Closed |
+|:---------------|--------------------:|-----------------:|
+| True Operating |                2096 |              392 |
+| True Closed    |                 258 |               88 |
 
 This model performs decently, but is by no means good. About $\frac15$ predictions of closed are correct, meaning it is very bad at characterizing when a location is actually closed. To improve predictions, in the next section I consider adding in more features and different models which may improve predictions, particularly the f1 score for closed. 
-
-
-
 
 ## Final model
 
@@ -305,7 +305,10 @@ Finally, the random forest model is the best performing on macro average F1 scor
 Random forests have various hyperparameters; tuning them is necessary to gain an optimal model. To find a good set of hyperparameters, I use grid search with five fold cross validation. For number of estimators, I select from amongst 100,200,300, and 400. For maximum depth, I select from amongst none, 10, and 20. For minimum samples per leaf, I select from 1, 3, 8, 12, 15, 20, and 25. In this case grid seach looks at each combination of hyperparameters and chooses the model with the best F1 score averaged across five fold cross validation. This methodology avoids chosing a model which overfits the data with unrealistic hyperparameters. I end up with a max depth of 0, a minimum number of samples per leaf of 15, and a number of estimators of 400. The hyperparameter selection ends up trading some precision for a significant increase recall. This provides an F1 score on the closed class of 0.304, which is a modestly good prediction given the heavily biased sample. I provide the confusion matrix of this model below. Notably, it has more errors where it predicts a business will be closed but it isn't. This is acceptable in this case, since it catches more actually closed businesses while still maintaining a reasonable balance. This is an improvement over the baseline model, which had very poor precision and recall when predicting closure. It also maintains a very similar f1 score when predicting a business is operating.  
 
 
-<iframe src="assets/finalConfusionMatrix.html" width="600" height="450" frameborder="0"></iframe>
+|                |   Predict Operating |   Predict Closed |
+|:---------------|--------------------:|-----------------:|
+| True Operating |                1990 |              498 |
+| True Closed    |                 195 |              151 |
 
 
 Although this model does a modestly good job at predicting whether a business is closed, it is still far from perfect and isn't able to identify closed businesses the majority of the time. This is not primarily due to the model type or hyperparameter selection, but the relatively weak features which do not have an ideal amount of correlation with the response variable. This is a significant limitation of the model which can only be accounted for by collecting new data or doing more feature engineering. Additionally, the dataset is very unbalanced with a relatively low percentage of locations in the dataset being closed. This makes the binary task difficult, since a business being operational is far more common. These results are also limited to business which have significant information; this model may not generalize to locations which do not have information on their state.
