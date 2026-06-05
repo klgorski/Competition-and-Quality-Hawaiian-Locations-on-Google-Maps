@@ -65,21 +65,29 @@ I create variables for the number of days the business is open and the average n
 | 0x7954d370921ff6bd:0x3193ba783e26d032 | ['0x7c00456eecad3111:0x8217f9600c51f33', '0x795... | ['0x7954d2c01aed2bcf:0x7c49262729c9c421', '0x79... |               93 |
 | 0x7c006df045b01715:0xe945c308688e1a46 | ['0x7c00456eecad3111:0x8217f9600c51f33', '0x795... | ['0x7c006dee35049c21:0xfc2e9fbd1dbed7e8', '0x7c... |              646 |
 
-| gmap_id                               | CompetitorsPriceRange                              |   numCompetitorsPriceRange |   reviewCount |   minRating |   medianRating |
-|:--------------------------------------|:---------------------------------------------------|---------------------------:|--------------:|------------:|---------------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  | []                                                 |                          0 |           nan |         nan |            nan |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | []                                                 |                          0 |            20 |           1 |              5 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | []                                                 |                          0 |           nan |         nan |            nan |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 | ['0x7954d2c0e04c1e7f:0x41f080467ecda138', '0x79... |                         16 |           nan |         nan |            nan |
-| 0x7c006df045b01715:0xe945c308688e1a46 | []                                                 |                          0 |           nan |         nan |            nan |
+| gmap_id                               | CompetitorsPriceRange                              |   numCompetitorsPriceRange |   reviewCount |   minRating |
+|:--------------------------------------|:---------------------------------------------------|---------------------------:|--------------:|------------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  | []                                                 |                          0 |           nan |         nan |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | []                                                 |                          0 |            20 |           1 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | []                                                 |                          0 |           nan |         nan |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | ['0x7954d2c0e04c1e7f:0x41f080467ecda138', '0x79... |                         16 |           nan |         nan |
+| 0x7c006df045b01715:0xe945c308688e1a46 | []                                                 |                          0 |           nan |         nan |
 
-| gmap_id                               |   avgResponseTime |   avgRatingRepeatReviewer | ruralUrbanClass   |   daysOpen |   avgHoursOpen |   isClosed |
-|:--------------------------------------|------------------:|--------------------------:|:------------------|-----------:|---------------:|-----------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  |               nan |                       nan | Semi-Urban        |          6 |         9      |          0 |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |               nan |                         4 | Urban             |          7 |        11.2857 |          0 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |               nan |                       nan | Urban             |          4 |         6.25   |          0 |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 |               nan |                       nan | Urban             |          7 |        12.5    |          0 |
-| 0x7c006df045b01715:0xe945c308688e1a46 |               nan |                       nan | Urban             |          7 |         9.5    |          0 |
+| gmap_id                               |   medianRating |   avgResponseTime |   avgRatingRepeatReviewer | ruralUrbanClass   |   daysOpen |
+|:--------------------------------------|---------------:|------------------:|--------------------------:|:------------------|-----------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  |            nan |               nan |                       nan | Semi-Urban        |          6 |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |              5 |               nan |                         4 | Urban             |          7 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |            nan |               nan |                       nan | Urban             |          4 |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 |            nan |               nan |                       nan | Urban             |          7 |
+| 0x7c006df045b01715:0xe945c308688e1a46 |            nan |               nan |                       nan | Urban             |          7 |
+
+| gmap_id                               |   avgHoursOpen |   isClosed |
+|:--------------------------------------|---------------:|-----------:|
+| 0x7c00456eecad3111:0x8217f9600c51f33  |         9      |          0 |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e |        11.2857 |          0 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 |         6.25   |          0 |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 |        12.5    |          0 |
+| 0x7c006df045b01715:0xe945c308688e1a46 |         9.5    |          0 |
 
 **Univariate Analysis**
 
