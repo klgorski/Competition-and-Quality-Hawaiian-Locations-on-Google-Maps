@@ -392,7 +392,7 @@ This model performs decently, but is by no means good. About $\frac15$ predictio
 ## Final model
 
 
-When testing models, I add a variety of features from the dataset into these models. I use one hot encoding of categorical variables such as zip code and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I transform them into degree two polynomial features, which are useful for capturing any nonlinear relationships. I add numerical variables such as the number of reviews, average rating, number of close locations, and number of competitors within price range. I add these features because they should intuitively be factors which affect a business closing. It would be expected that there will be a higher rate of closure for locations in a city or a very low average rating. Adding these features improves the model because they capture variation which was not captured simply by price and the number of competitors such as geographic variation and the consumer's feedback. Some of these variables suffer from being near collinear, for example the number of competitors and the number of competitors within price range. Depending on which class of model is chosen, the number of variables may be reduced to account for these multicollinearity issues. For models such as K neighbors classification, multicollinearity is a much larger issue than for models such as a random forest.
+When testing models, I add a variety of features from the dataset into these models. I use one hot encoding of categorical variables such as zip code and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I transform them into degree two polynomial features, which are useful for capturing any nonlinear relationships. I add numerical variables such as the number of reviews, average rating, number of close locations, and number of competitors within price range. I also add quantile features for average rating and number of competitors. This quantile features seeks to identify variation in these variables by quantile since there may be variation for very small for very small quantiles and very large quantiles of this data. For example, many business have no competitors, so it makes sense to group this together in a quantile and use this effect. I add these features because they should intuitively be factors which affect a business closing. It would be expected that there will be a higher rate of closure for locations in a city or a very low average rating. Adding these features improves the model because they capture variation which was not captured simply by price and the number of competitors such as geographic variation and the consumer's feedback. Some of these variables suffer from being near collinear, for example the number of competitors and the number of competitors within price range. Depending on which class of model is chosen, the number of variables may be reduced to account for these multicollinearity issues. For models such as K neighbors classification, multicollinearity is a much larger issue than for models such as a random forest.
 
 
 I now consider several classification models, such as logistic regression, K neighbors classification, decision trees, and random forest classification on this larger set of features. These models vary significantly in their complexity, interpretability, and performance. Comparing the models, KNN classification performs very poorly, having an F-1 score of 0.071 when predicting closure, mainly due to a very low recall. This means the model heavily underpredicts the business closing, which is particularly bad for this application because it will lead to overconfidence about whether or not the location will succeed.
@@ -404,15 +404,15 @@ Logistic regression and decision tree classification perform similarly to each o
 Finally, the random forest model is the best performing on macro average F1 score across all the models and has the best f1 score when predicting closed specifically. It is also the most balanced model with relatively consistent performance on both precision and recall. Therefore, I proceed using this class of models.
 
 
-Random forests have various hyperparameters; tuning them is necessary to gain an optimal model. To find a good set of hyperparameters, I use grid search with five fold cross validation. For the number of estimators, I select from amongst 100,200,300, and 400. For maximum depth, I select from amongst none, 10, and 20. For minimum samples per leaf, I select from 1, 3, 8, 12, 15, 20, and 25. In this case grid search looks at each combination of hyperparameters and chooses the model with the best F1 score averaged across five fold cross validation. This methodology avoids choosing a model which overfits the data with unrealistic hyperparameters. I end up with an unlimited max depth, a minimum number of samples per leaf of 15, and a number of estimators of 400. The hyperparameter selection ends up trading some precision for a significant increase in recall. This provides an F1 score on the closed class of 0.304, which is a modestly good prediction given the heavily biased sample. I provide the confusion matrix of this model below. Notably, it has more errors where it predicts a business will be closed but it isn't. This is acceptable in this case, since it catches more actually closed businesses while still maintaining a reasonable balance. This is an improvement over the baseline model, which had very poor precision and recall when predicting closure. It also maintains a very similar f1 score when predicting a business is operating.  
+Random forests have various hyperparameters; tuning them is necessary to gain an optimal model. To find a good set of hyperparameters, I use grid search with five fold cross validation. For the number of estimators, I select from amongst 100,200,300, and 400. For maximum depth, I select from amongst none, 10, and 20. For minimum samples per leaf, I select from 1, 3, 8, 12, 15, 20, and 25. In this case grid search looks at each combination of hyperparameters and chooses the model with the best F1 score averaged across five fold cross validation. This methodology avoids choosing a model which overfits the data with unrealistic hyperparameters. I end up with a max depth of 20, a minimum number of samples per leaf of 8, and a number of estimators of 300. The hyperparameter selection ends up trading some precision for an increase in recall. This provides an F1 score on the closed class of 0.303, which is a modestly good prediction given the heavily biased sample. I provide the confusion matrix of this model below. Notably, it has more errors where it predicts a business will be closed but it isn't. This is acceptable in this case, since it catches more actually closed businesses while still maintaining a reasonable balance. This is an improvement over the baseline model, which had very poor precision and recall when predicting closure. It also maintains a very similar f1 score when predicting a business is operating.  
 
 
 
 
 |                |   Predict Operating |   Predict Closed |
 |:---------------|--------------------:|-----------------:|
-| True Operating |                1990 |              498 |
-| True Closed    |                 195 |              151 |
+| True Operating |                2129 |              359 |
+| True Closed    |                 220 |              126 |
 
 
 
@@ -426,26 +426,25 @@ Although this model does a modestly good job at predicting whether a business is
 Another important consideration for this model is whether its predictions perform fairly across different groups. For example, if the model performs worse for rural locations than urban ones, this represents an unfairly designed model. To examine model fairness I look at accuracy parity comparing between the combinations of Rural, urban, and semi-urban. To test the significance, I use permutation testing under the null that the absolute difference in prediction accuracy between groups is zero and the alternative hypothesis that the absolute difference is greater than zero.
 
 
-I find that the difference between Urban and Rural accuracy is significant at the 1% level with an observed p-value of 0. This suggests that the model does not have the same prediction accuracy for urban and rural locations, meaning the model is not fair in this way. When examining the difference between rural and semi-urban locations, I similarly reject the null hypothesis at the 1% level with an observed p-value of 0.007. Therefore it seems that urban and semi-urban locations have significantly worse prediction accuracy compared to rural locations. The results from the permutation test between rural and urban is shown below, notably the result is very significant.
+I find that the difference between Urban and Rural accuracy is significant at the 1% level with an observed p-value of 0.004. This suggests that the model does not have the same prediction accuracy for urban and rural locations, meaning the model is not fair in this way. When examining the difference between rural and semi-urban locations, I fail to reject the null hypothesis at the 1% level with an observed p-value of 0.043. Therefore it seems that urban locations have significantly worse prediction accuracy compared to rural locations, while semi-urban locations do not. The results from the permutation test between rural and urban is shown below, notably the result is very significant.
 
 
 <iframe src="assets/fairnessRuralUrban.html" width="600" height="450" frameborder="0"></iframe>
 
 
-I also test whether there is a significant difference in prediction accuracy between semi-Urban and Urban. I fail to reject the null hypothesis at the 1% level with a p-value of 0.051. This suggests that there is not a significant difference in prediction accuracy between urban and semi-urban locations and that the model is fair between these two categories. The results of the permutation test are shown below.
+I also test whether there is a significant difference in prediction accuracy between semi-Urban and Urban. I fail to reject the null hypothesis at the 1% level with a p-value of 0.047. This suggests that there is not a significant difference in prediction accuracy between urban and semi-urban locations and that the model is fair between these two categories. The results of the permutation test are shown below.
 
 
 <iframe src="assets/fairnessUrbanSemi.html" width="600" height="450" frameborder="0"></iframe>
 
 
-Furthermore, there is also a clear difference in the false negative rate, rural and semiurban observations have much higher false negative rates as shown in the figure below.
+Furthermore, there is also a visible difference in the false negative rate, rural and semiurban observations have much higher false negative rates as shown in the figure below. 
 
 
 <iframe src="assets/fairnessFalseNegative.html" width="600" height="450" frameborder="0"></iframe>
 
 
-There seems to be significant evidence that in some ways the model isn't completely fair in its predictions.
-
+There seems to be significant evidence that in some ways the model isn't completely fair in its predictions between urban and rural locations. 
 
 
 ## Conclusions
