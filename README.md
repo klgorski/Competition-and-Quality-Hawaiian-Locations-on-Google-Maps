@@ -165,7 +165,7 @@ Now I consider secondary relationships, such as the price range and the number o
 <iframe src="assets/competitorsbyPriceRange.html" width="600" height="450" frameborder="0"></iframe>
 
 
-Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increases. The main shift occurs going from /$/$ to /$/$/$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support that lower number of competitors is correlated with a higher price.
+Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increases. The main shift occurs going from \$\$ to \$\$\$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support that lower number of competitors is correlated with a higher price.
 
 <iframe src="assets/ratingCompetitorsBar.html" width="600" height="450" frameborder="0"></iframe>
 
