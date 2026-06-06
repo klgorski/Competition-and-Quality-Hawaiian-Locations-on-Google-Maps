@@ -321,8 +321,6 @@ An example of data which is likely to be MAR is the text of individual user revi
 I also find that missingness does not depend on the time the review was sent. This is expected because time should not have a significant effect on whether a person writes text in the review. Again, I perform the permutation testing procedure on the reduced sample, since when performing it on the full sample the test may have too much power. The results are plotted below.
 
 
-
-
 <iframe src="assets/textNATime.html" width="600" height="450" frameborder="0"></iframe>
 
 
@@ -361,6 +359,8 @@ This test strongly rejects the null hypothesis at the 1% level with a p-value of
 
 
 <iframe src="assets/avgRatingsClosurePDF.html" width="600" height="450" frameborder="0"></iframe>
+
+Difference in means is the correct test statistic for this, because we do not need to detect differences in what the distributions look like, just the differences in the means between different groups. A non-parametric test like Kolmogorov-Smirnov may also have less power for this application since it is non-parametric and requires fewer assumptions. 
 
 
 ## Framing a Prediction Problem
