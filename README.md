@@ -15,7 +15,7 @@ I investigate how competition, location, and other features correlate with and p
 Important features which I create are the close locations, similar locations, and similar and close locations which I classify as a location's "competitors". Since not all locations are businesses, they may not be competitors in the traditional economic sense, however similar attractions such as two waterfalls may still be seen as competing with each other for visitors. First, I measure the distance between locations using haversine distance which calculates the distance between two locations on a sphere using their latitude and longitude, which are the location variables given in the dataset. I then measure "similarity" in locations using the cosine similarity between each location's name, description, and some elements of the miscellaneous information. Particularly I exclude miscellaneous information on accessibility and health and safety, since that information is shared across many unrelated locations. Combining this information I create a set of locations that are both similar and close for each location. Finally, I filter for locations that are similar and within the same price category, although since many price values are missing this will not be the primary unit for analysis.
 
 
-I also clean information like price and zipcode by removing values which should not be in the dataset such as ₩, non-english zip codes, and non-Hawaiian zipcode. I extracted zipcodes from address information using regular expressions. I then create a feature which characterizes whether a location is rural, semi-urban, or urban using the RUCA codes developed by the USDA. I characterize urban as 1-3, semi-urban as 4-7, and rural as 8-10.
+I also clean information like price and zipcode by removing values which should not be in the dataset such as ₩, non-English zip codes, and non-Hawaiian zipcode. I extracted zipcodes from address information using regular expressions. I then create a feature which characterizes whether a location is rural, semi-urban, or urban using the RUCA codes developed by the USDA. I characterize urban as 1-3, semi-urban as 4-7, and rural as 8-10.
 
 
 Other potentially useful features about individual reviews are aggregated then merged into the location level dataset. I create features for review count, minimum rating, median rating, and the average rating amongst repeat reviewers who have more than five reviews. I construct a variable for the average response time of the business owner by taking the difference between the time the review was posted and the response time, then aggregating these differences. However, most of the analysis does not use these variables, since many locations in the metadata dataset do not have a match in the reviews dataset.
@@ -165,23 +165,20 @@ Now I consider secondary relationships, such as the price range and the number o
 <iframe src="assets/competitorsbyPriceRange.html" width="600" height="450" frameborder="0"></iframe>
 
 
-Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increases. The main shift occurs going from \$\$ to \$\$\$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support that lower number of competitors is correlated with a higher price.
+Across price categories, the number of competitors is somewhat similar, with a decreasing median and maximum number of competitors as price increases. The main shift occurs going from \$\$ to \$\$\$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support that lower number of competitors is correlated with a higher price.
 
 <iframe src="assets/ratingCompetitorsBar.html" width="600" height="450" frameborder="0"></iframe>
 
 The bar plot of number of competitors by rating shows that for most of the ratings distribution the number of competitors does not differ too much by median. In the top few bars of the ratings distribution there is a difference and reduction in median number of competitors. This may be seen as a counter intuitive result, since you would expect the quality to increase along with the number of competitors. This may reflect the result from the previous plots, since higher priced restaurants have fewer competitors and higher ratings. The bottom of the distribution also has few competitors which is an expected result.
 
 
-Further visualizing this relationship, a scatter plot of ratings by number of competitors within the same price range shows a slightly positive trend, although it is very small. This may indicate there is a relatively small relationship between competition and quality in this dataset.
+Further visualizing this relationship, a scatter plot of ratings by number of competitors within the same price range shows a slightly negative trend, although it is small. This may indicate there is a negative relationship between competition and quality in this dataset.
 
 
 <iframe src="assets/priceRangeCompetitorsRating.html" width="600" height="450" frameborder="0"></iframe>
 
 
-The bar plot of number of competitors by rating shows that for most of the ratings distribution the number of competitors does not differ too much by median. In the top few bars of the ratings distribution there is a difference and reduction in median number of competitors. This may be seen as a counter intuitive result, since you would expect the quality to increase along with the number of competitors. This may reflect the result from the previous plots, since higher priced restaurants have fewer competitors and higher ratings. The bottom of the distribution also has few competitors which is an expected result.
-
-
-Looking at the relationship between average rating and price, the empirical cumulative distribution function is shown below. It shows that lower prices have more density earlier in the distribution, which is evidence that cheaper locations are worse rated.
+Looking at the relationship between average rating and price, the empirical cumulative distribution function is shown below. It shows that lower prices have more cumulative density at lower ratings, which is evidence that cheaper locations are worse rated.
 
 <iframe src="assets/avgRatingsPriceCDF.html" width="600" height="450" frameborder="0"></iframe>
 
@@ -292,7 +289,7 @@ Finally, I look at the correlation matrix of all numeric variables in the datase
 
 
 
-Some of the significant correlations from this matrix are number of reviews and average rating, which are positively correlated. The number of reviews is also positively correlated with the average response time. Another notable result is that ratings are  negatively correlated with the number of close locations, competitors, and competitors within the same price range.
+Some of the significant correlations from this matrix are closure status and the average rating by repeat reviewers, which are negatively correlated. The number of reviews is also positively correlated with the average response time. Another notable result is that ratings are  negatively correlated with the number of close locations, competitors, and competitors within the same price range.
 
 
 
@@ -330,7 +327,7 @@ I also find that missingness does not depend on the time the review was sent. Th
 <iframe src="assets/textNATime.html" width="600" height="450" frameborder="0"></iframe>
 
 
-One caveat is that reducing the sample in such a way is highly susceptible to which rows get picked. Although this is necessary to reduce the rates of false positives when running this permutation test, these results should be interpreted with caution.
+One caveat is that reducing the sample in such a way is highly susceptible to which rows get picked. Although this is necessary to reduce the power when running this permutation test, these results should be interpreted with caution.
 
 
 
@@ -396,7 +393,7 @@ This model performs decently, but is by no means good. About $\frac15$ predictio
 ## Final model
 
 
-When testing models, I add a variety of features from the dataset into these models. I use one hot encoding of categorical variables such as zip code and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I transform them into degree two polynomial features, which is useful for capturing any nonlinear relationships. I add numerical variables such as the number of reviews, average rating, number of close locations, and number of competitors within price range. I add these features because they should intuitively be factors which affect a business closing. It would be expected that there will be a higher rate of closure for locations in a city or a very low average rating. Adding these features improves the model because they capture variation which was not captured simply by price and the number of competitors such as geographic variation and the consumer's feedback. Some of these variables suffer from being near collinear, for example the number of competitors and the number of competitors within price range. Depending on which class of model is chosen, the number of variables may be reduced to account for these multicollinearity issues. For models such as K neighbors classification, multicollinearity is a much larger issue than for models such as a random forest.
+When testing models, I add a variety of features from the dataset into these models. I use one hot encoding of categorical variables such as zip code and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I transform them into degree two polynomial features, which are useful for capturing any nonlinear relationships. I add numerical variables such as the number of reviews, average rating, number of close locations, and number of competitors within price range. I add these features because they should intuitively be factors which affect a business closing. It would be expected that there will be a higher rate of closure for locations in a city or a very low average rating. Adding these features improves the model because they capture variation which was not captured simply by price and the number of competitors such as geographic variation and the consumer's feedback. Some of these variables suffer from being near collinear, for example the number of competitors and the number of competitors within price range. Depending on which class of model is chosen, the number of variables may be reduced to account for these multicollinearity issues. For models such as K neighbors classification, multicollinearity is a much larger issue than for models such as a random forest.
 
 
 I now consider several classification models, such as logistic regression, K neighbors classification, decision trees, and random forest classification on this larger set of features. These models vary significantly in their complexity, interpretability, and performance. Comparing the models, KNN classification performs very poorly, having an F-1 score of 0.071 when predicting closure, mainly due to a very low recall. This means the model heavily underpredicts the business closing, which is particularly bad for this application because it will lead to overconfidence about whether or not the location will succeed.
@@ -436,7 +433,7 @@ I find that the difference between Urban and Rural accuracy is significant at th
 <iframe src="assets/fairnessRuralUrban.html" width="600" height="450" frameborder="0"></iframe>
 
 
-I also test whether there is a significant difference in prediction accuracy between semi-Urban and Urban. I fail to reject the null hypothesis at the 1% level with a p-value of 0.051. This suggests that there is not a significant difference in prediction accuracy between urban and semi-urban locations and that the model is fair between these two categories. The results of the permutation test is shown below
+I also test whether there is a significant difference in prediction accuracy between semi-Urban and Urban. I fail to reject the null hypothesis at the 1% level with a p-value of 0.051. This suggests that there is not a significant difference in prediction accuracy between urban and semi-urban locations and that the model is fair between these two categories. The results of the permutation test are shown below.
 
 
 <iframe src="assets/fairnessUrbanSemi.html" width="600" height="450" frameborder="0"></iframe>
