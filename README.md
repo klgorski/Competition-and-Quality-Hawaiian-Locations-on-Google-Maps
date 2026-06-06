@@ -1,7 +1,7 @@
 ## Introduction
 
 
-I investigate how competition, location, and other features correlate with and predict whether a business permanently closes. This is an important question for business owners; if you can predict whether a business will fail based on a set of features it can inform the business owner's optimal decisions. The setting for the data is Hawaiian google maps data, which describes the metadata and information on a subset of reviews for locations. This is a relevant setting because much of the publicly available information on locations, such as their ratings, location, and number of competitors can be key predictors for the business's success. The dataset on location metadata has 21507 locations; relevant columns include the address, text information including name, description and miscellaneous information, latitude and longitude, average ratings and the number of reviews, the hours of the location, and the business's state. Address, latitude, longitude, name, and description are self explanatory. Miscellaneous information contains other information on the location such as if it does takeout, if it is wheelchair accessible, and more. Average rating is the average user reported rating on google maps and the number of reviews is the total number of reviews for that location. The hours of the location contains information on which days of the week the location is open, and which hours it is open. The business's state contains information on whether the location is currently open, close, or permanently closed. This provides the response I wish to predict in this project.
+I investigate how competition, location, and other features correlate with and predict whether a business permanently closes. This is an important question for business owners; if you can predict whether a business will fail based on a set of features it can inform the business owner's optimal decisions. The setting for the data is Hawaiian Google maps data, which describes the metadata and information on a subset of reviews for locations. This is a relevant setting because much of the publicly available information on locations, such as their ratings, location, and number of competitors can be key predictors for the business's success. The dataset on location metadata has 21507 locations; relevant columns include the address, text information including name, description and miscellaneous information, latitude and longitude, average ratings and the number of reviews, the hours of the location, and the business's state. Address, latitude, longitude, name, and description are self explanatory. Miscellaneous information contains other information on the location such as if it does takeout, if it is wheelchair accessible, and more. Average rating is the average user reported rating on Google maps and the number of reviews is the total number of reviews for that location. The hours of the location contains information on which days of the week the location is open, and which hours it is open. The business's state contains information on whether the location is currently open, closed, or permanently closed. This provides the response I wish to predict in this project.
 
 
 
@@ -12,16 +12,16 @@ I investigate how competition, location, and other features correlate with and p
 **Data Cleaning**
 
 
-Important features which I create are, the close locations, similar locations, and similar and close locations which I classify as a location's "competitors". Since not all locations are businesses, they may not be competitors in the traditional economic sense, however similar attractions such as two waterfalls may still be seen as competing with each other for visitors. First, I measure the distance between locations using haversine distance which calculates the distance between two locations on a sphere using their latitude and longitude, which are the location variables given in the dataset. I then measure "similarity" in locations using the cosine similarity between each location's name, description, and some elements of the miscellaneous information. Particularly I exclude miscellaneous information on accessibility and health and safety, since that information is shared across many unrelated information. Combining this information I create a set of locations that are both similar and close for each location. Finally, I filter for locations that are similar and within the same price category, although since many price values are missing this will not be the primary unit for analysis.
+Important features which I create are the close locations, similar locations, and similar and close locations which I classify as a location's "competitors". Since not all locations are businesses, they may not be competitors in the traditional economic sense, however similar attractions such as two waterfalls may still be seen as competing with each other for visitors. First, I measure the distance between locations using haversine distance which calculates the distance between two locations on a sphere using their latitude and longitude, which are the location variables given in the dataset. I then measure "similarity" in locations using the cosine similarity between each location's name, description, and some elements of the miscellaneous information. Particularly I exclude miscellaneous information on accessibility and health and safety, since that information is shared across many unrelated locations. Combining this information I create a set of locations that are both similar and close for each location. Finally, I filter for locations that are similar and within the same price category, although since many price values are missing this will not be the primary unit for analysis.
 
 
-I also clean information like price and zipcode by removing values which should not be in the dataset such as ₩, non-english zip codes, and non-Hawian zipcode. I extracted zipcodes from address information using regular expressions. I then create a feature which characterizes whether a location is rural, semi-urban, or urban using the RUCA codes developed by the USDA. I characterize urban as 1-3, semi-urban as 4-7, and rural as 8-10.
+I also clean information like price and zipcode by removing values which should not be in the dataset such as ₩, non-english zip codes, and non-Hawaiian zipcode. I extracted zipcodes from address information using regular expressions. I then create a feature which characterizes whether a location is rural, semi-urban, or urban using the RUCA codes developed by the USDA. I characterize urban as 1-3, semi-urban as 4-7, and rural as 8-10.
 
 
 Other potentially useful features about individual reviews are aggregated then merged into the location level dataset. I create features for review count, minimum rating, median rating, and the average rating amongst repeat reviewers who have more than five reviews. I construct a variable for the average response time of the business owner by taking the difference between the time the review was posted and the response time, then aggregating these differences. However, most of the analysis does not use these variables, since many locations in the metadata dataset do not have a match in the reviews dataset.
 
 
-I create variables for the number of days the business is open and the average number of hours the business is open. I construct this information from the hours variable in the original metadata dataset. Finally, I construct an indicator for whether a business is closed, this will serve as the dependent variable in the analysis.The head of the dataset is shown below.
+I create variables for the number of days the business is open and the average number of hours the business is open. I construct this information from the hours variable in the original metadata dataset. Finally, I construct an indicator for whether a business is closed, this will serve as the dependent variable in the analysis. The head of the dataset is shown below.
 
 
 | gmap_id                               | name                        | address                                            |   description |   latitude |   longitude |
@@ -46,11 +46,11 @@ I create variables for the number of days the business is open and the average n
 
 | gmap_id                               | url                                                |   zipcode |
 |:--------------------------------------|:---------------------------------------------------|----------:|
-| 0x7c00456eecad3111:0x8217f9600c51f33  | https://www.google.com/maps/place//data=!4m2!3m... |     96762 |
-| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | https://www.google.com/maps/place//data=!4m2!3m... |     96734 |
-| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | https://www.google.com/maps/place//data=!4m2!3m... |     96793 |
-| 0x7954d370921ff6bd:0x3193ba783e26d032 | https://www.google.com/maps/place//data=!4m2!3m... |     96732 |
-| 0x7c006df045b01715:0xe945c308688e1a46 | https://www.google.com/maps/place//data=!4m2!3m... |     96814 |
+| 0x7c00456eecad3111:0x8217f9600c51f33  | https://www.Google.com/maps/place//data=!4m2!3m... |     96762 |
+| 0x7c00159b5b1b1d25:0x8d2d85d4a758290e | https://www.Google.com/maps/place//data=!4m2!3m... |     96734 |
+| 0x7954d376a8b12db3:0xa51dd57e1cc14ca9 | https://www.Google.com/maps/place//data=!4m2!3m... |     96793 |
+| 0x7954d370921ff6bd:0x3193ba783e26d032 | https://www.Google.com/maps/place//data=!4m2!3m... |     96732 |
+| 0x7c006df045b01715:0xe945c308688e1a46 | https://www.Google.com/maps/place//data=!4m2!3m... |     96814 |
 
 
 
@@ -118,12 +118,12 @@ I plot the histograms for five variables of interest below.
 <iframe src="assets/isClosed.html" width="600" height="450" frameborder="0"></iframe>
 
 
-As would be expected by far the majority of the locations in the dataset are classified as operating (0), while only a few are closed (1). This is likely due to google removing businesses which are closed for too long. An important consideration is that this is a very unbalanced distribution, which will make prediction difficult.
+As would be expected by far the majority of the locations in the dataset are classified as operating (0), while only a few are closed (1). This is likely due to Google removing businesses which are closed for too long. An important consideration is that this is a very unbalanced distribution, which will make prediction difficult.
  
 <iframe src="assets/avgRating.html" width="600" height="450" frameborder="0"></iframe>
 
 
-The histogram of average ratings shows that on average ratings are relatively high, primarily centered around 4.5 stars with a spike at 5 stars. This could potentially be because many firms leave fake reviews or because people genuinely do rate locations highly. There is likely some form of adverse selection at play; locations which do not perform well are not going to survive and then may not appear in the dataset.
+The histogram of average ratings shows that on average ratings are relatively high, primarily centered around 4.5 stars with a spike at 5 stars. This could potentially be because many firms leave fake reviews or because people genuinely do rate locations highly. There is likely some form of survivorship bias at play; locations which do not perform well are not going to survive and then may not appear in the dataset.
 
 
 
@@ -149,7 +149,7 @@ Most firms have very few competitors or no competitors which is expected since i
 **Bivariate Analysis**
 
 
-I begin by analyzing connections between whether a location is closed and characteristics such as price and average rating. Looking at the relationship between average rating and whether a business is closed or not, there does seem to be a relationship where as rating increases, the proportion of that rating that a closed decreases. For very small ratings, the proportion is very high, although this could be a result of the low amount of observations at this small rating.
+I begin by analyzing connections between whether a location is closed and characteristics such as price and average rating. Looking at the relationship between average rating and whether a business is closed or not, there does seem to be a relationship where as rating increases, the proportion of that rating that is closed decreases. For very small ratings, the proportion is very high, although this could be a result of the low number of observations at this small rating.
 
 
 <iframe src="assets/isCloseAvgRating.html" width="600" height="450" frameborder="0"></iframe>
@@ -165,14 +165,9 @@ Now I consider secondary relationships, such as the price range and the number o
 <iframe src="assets/competitorsbyPriceRange.html" width="600" height="450" frameborder="0"></iframe>
 
 
-Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increases. The main shift occurs going from $$ to $$$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support a lower number of competitors is correlated with a higher price.
-
-
-Looking at the relationship between average rating and price, the bar plot is shown below.
-
+Across price categories, the number of competitors are somewhat similar, with a decreasing median and maximum number of competitors as price increases. The main shift occurs going from /$/$ to /$/$/$, with the two lower price categories and the two higher price categories generally being similar. This plot provides some evidence to support that lower number of competitors is correlated with a higher price.
 
 <iframe src="assets/ratingCompetitorsBar.html" width="600" height="450" frameborder="0"></iframe>
-
 
 The bar plot of number of competitors by rating shows that for most of the ratings distribution the number of competitors does not differ too much by median. In the top few bars of the ratings distribution there is a difference and reduction in median number of competitors. This may be seen as a counter intuitive result, since you would expect the quality to increase along with the number of competitors. This may reflect the result from the previous plots, since higher priced restaurants have fewer competitors and higher ratings. The bottom of the distribution also has few competitors which is an expected result.
 
@@ -180,9 +175,15 @@ The bar plot of number of competitors by rating shows that for most of the ratin
 Further visualizing this relationship, a scatter plot of ratings by number of competitors within the same price range shows a slightly positive trend, although it is very small. This may indicate there is a relatively small relationship between competition and quality in this dataset.
 
 
-
-
 <iframe src="assets/priceRangeCompetitorsRating.html" width="600" height="450" frameborder="0"></iframe>
+
+
+The bar plot of number of competitors by rating shows that for most of the ratings distribution the number of competitors does not differ too much by median. In the top few bars of the ratings distribution there is a difference and reduction in median number of competitors. This may be seen as a counter intuitive result, since you would expect the quality to increase along with the number of competitors. This may reflect the result from the previous plots, since higher priced restaurants have fewer competitors and higher ratings. The bottom of the distribution also has few competitors which is an expected result.
+
+
+Looking at the relationship between average rating and price, the empirical cumulative distribution function is shown below. It shows that lower prices have more density earlier in the distribution, which is evidence that cheaper locations are worse rated.
+
+<iframe src="assets/avgRatingsPriceCDF.html" width="600" height="450" frameborder="0"></iframe>
 
 
 
@@ -224,7 +225,7 @@ Looking at aggregates by price category also yields interesting results, below i
 
 
 
-As expected, average rating increases on average as price increases. The number of reviews also increases, which could reflect that people are enthusiastic to write a review if they have spent lots of money, for example an upscale restaurant. The number of close locations also increases as price increases. This is likely because more expensive locations are going to be in cities, where there are many close locations. On the other hand, the number of competitors is generally decreasing as price increases. This aligns with the hypothesis that competition is negatively correlated with price.
+As expected, average rating increases on average as price increases. The number of reviews also generally increases, which could reflect that people are enthusiastic to write a review if they have spent lots of money, for example an upscale restaurant. The number of close locations also increases as price increases. This is likely because more expensive locations are going to be in cities, where there are many close locations. On the other hand, the number of competitors is generally decreasing as price increases. This aligns with the hypothesis that competition is negatively correlated with price.
 
 
 
@@ -291,7 +292,7 @@ Finally, I look at the correlation matrix of all numeric variables in the datase
 
 
 
-Some of the significant correlations from this matrix are number of reviews and average rating, which are positively correlated. The number of reviews is also positively correlated with the average response time. Another notable result is that ratings are  negatively correlated with the number of close locations and competitors, but slightly positively correlated with competitors within the same price range.
+Some of the significant correlations from this matrix are number of reviews and average rating, which are positively correlated. The number of reviews is also positively correlated with the average response time. Another notable result is that ratings are  negatively correlated with the number of close locations, competitors, and competitors within the same price range.
 
 
 
@@ -302,7 +303,7 @@ Some of the significant correlations from this matrix are number of reviews and 
  
 
 
-One important consideration for this dataset is the missingness of various data. Particularly, important variables like price and description are mostly missing. For price, it is likely that it is not missing at random. Locations which have no cost or a very low cost are more likely to be missing than highly expensive restaurants. Particularly, reviewers from low cost locations are less likely to note the price in their review or post information such as the menu which google uses to categorize the price. Therefore it is reasonable to say that price's missingness depends on the price itself.
+One important consideration for this dataset is the missingness of various data. Particularly, important variables like price and description are mostly missing. For price, it is likely that it is not missing at random. Locations which have no cost or a very low cost are more likely to be missing than highly expensive restaurants. Particularly, reviewers from low cost locations are less likely to note the price in their review or post information such as the menu which Google uses to categorize the price. Therefore it is reasonable to say that price's missingness depends on the price itself.
 
 
 
@@ -313,7 +314,7 @@ An example of data which is likely to be MAR is the text of individual user revi
 <iframe src="assets/textNAFull.html" width="600" height="450" frameborder="0"></iframe>
 
 
- One consideration is that this test may have too much power and lead to false positives. To address this potential issue, I take a completely random subsample of the dataset and compute the same permutation test on it; the result still rejects the null. I plot the results from this test below.
+ One consideration is that this test may have too much power and lead to detecting trivially small differences in the distributions. To address this potential issue, I take a completely random subsample of the dataset and compute the same permutation test on it; the result still rejects the null. I plot the results from this test below.
 
 
  <iframe src="assets/textNASubset.html" width="600" height="450" frameborder="0"></iframe>
@@ -321,7 +322,7 @@ An example of data which is likely to be MAR is the text of individual user revi
 
 
 
-I also find that missing does not depend on the time the review was sent. This is expected because time should not have a significant effect on whether a person writes text in the review. Again, I perform the permutation testing procedure on the reduced sample, since when performing it on the full sample the test has too much power. The results are plotted below.
+I also find that missingness does not depend on the time the review was sent. This is expected because time should not have a significant effect on whether a person writes text in the review. Again, I perform the permutation testing procedure on the reduced sample, since when performing it on the full sample the test may have too much power. The results are plotted below.
 
 
 
@@ -343,7 +344,7 @@ One caveat is that reducing the sample in such a way is highly susceptible to wh
 
 
 
-**Differences is Rate of Closure by Price Category and Average Rating**
+**Differences in Rate of Closure by Price Category and Average Rating**
 
 
 
@@ -395,7 +396,7 @@ This model performs decently, but is by no means good. About $\frac15$ predictio
 ## Final model
 
 
-When testing models, I add a variety of features from the dataset into these models. I use one hot encoding of categorical variables such as zip code and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I transform them into degree two polynomial features, which is useful for capturing any nonlinear relationships. I add numerical variables such as the number of reviews, average rating, number of close locations, and number of competitors within price range. I add these features because they should intuitively be factors which affect a business closing. It would be expected that there will be a higher rate of closure for locations in a city or a very low average rating. Adding these features improves the model because they capture variation which was not captured simply by price and the number of competitors such as geographic variation and the consumer's feedback. Some of these variables suffer from being near colinear, for example the number of competitors and the number of competitors within price range. Depending on which class of model is chosen, the number of variables may be reduced to account for these multicollinearity issues. For models such as K neighbors classification, multicollinearity is a much larger issue than for models such as a random forest.
+When testing models, I add a variety of features from the dataset into these models. I use one hot encoding of categorical variables such as zip code and rural urban status. These one hot encodings seek to capture variation by location and how urban a zipcode is. For numerical variables, I transform them into degree two polynomial features, which is useful for capturing any nonlinear relationships. I add numerical variables such as the number of reviews, average rating, number of close locations, and number of competitors within price range. I add these features because they should intuitively be factors which affect a business closing. It would be expected that there will be a higher rate of closure for locations in a city or a very low average rating. Adding these features improves the model because they capture variation which was not captured simply by price and the number of competitors such as geographic variation and the consumer's feedback. Some of these variables suffer from being near collinear, for example the number of competitors and the number of competitors within price range. Depending on which class of model is chosen, the number of variables may be reduced to account for these multicollinearity issues. For models such as K neighbors classification, multicollinearity is a much larger issue than for models such as a random forest.
 
 
 I now consider several classification models, such as logistic regression, K neighbors classification, decision trees, and random forest classification on this larger set of features. These models vary significantly in their complexity, interpretability, and performance. Comparing the models, KNN classification performs very poorly, having an F-1 score of 0.071 when predicting closure, mainly due to a very low recall. This means the model heavily underpredicts the business closing, which is particularly bad for this application because it will lead to overconfidence about whether or not the location will succeed.
@@ -407,7 +408,7 @@ Logistic regression and decision tree classification perform similarly to each o
 Finally, the random forest model is the best performing on macro average F1 score across all the models and has the best f1 score when predicting closed specifically. It is also the most balanced model with relatively consistent performance on both precision and recall. Therefore, I proceed using this class of models.
 
 
-Random forests have various hyperparameters; tuning them is necessary to gain an optimal model. To find a good set of hyperparameters, I use grid search with five fold cross validation. For the number of estimators, I select from amongst 100,200,300, and 400. For maximum depth, I select from amongst none, 10, and 20. For minimum samples per leaf, I select from 1, 3, 8, 12, 15, 20, and 25. In this case grid search looks at each combination of hyperparameters and chooses the model with the best F1 score averaged across five fold cross validation. This methodology avoids choosing a model which overfits the data with unrealistic hyperparameters. I end up with a max depth of 0, a minimum number of samples per leaf of 15, and a number of estimators of 400. The hyperparameter selection ends up trading some precision for a significant increase in recall. This provides an F1 score on the closed class of 0.304, which is a modestly good prediction given the heavily biased sample. I provide the confusion matrix of this model below. Notably, it has more errors where it predicts a business will be closed but it isn't. This is acceptable in this case, since it catches more actually closed businesses while still maintaining a reasonable balance. This is an improvement over the baseline model, which had very poor precision and recall when predicting closure. It also maintains a very similar f1 score when predicting a business is operating.  
+Random forests have various hyperparameters; tuning them is necessary to gain an optimal model. To find a good set of hyperparameters, I use grid search with five fold cross validation. For the number of estimators, I select from amongst 100,200,300, and 400. For maximum depth, I select from amongst none, 10, and 20. For minimum samples per leaf, I select from 1, 3, 8, 12, 15, 20, and 25. In this case grid search looks at each combination of hyperparameters and chooses the model with the best F1 score averaged across five fold cross validation. This methodology avoids choosing a model which overfits the data with unrealistic hyperparameters. I end up with an unlimited max depth, a minimum number of samples per leaf of 15, and a number of estimators of 400. The hyperparameter selection ends up trading some precision for a significant increase in recall. This provides an F1 score on the closed class of 0.304, which is a modestly good prediction given the heavily biased sample. I provide the confusion matrix of this model below. Notably, it has more errors where it predicts a business will be closed but it isn't. This is acceptable in this case, since it catches more actually closed businesses while still maintaining a reasonable balance. This is an improvement over the baseline model, which had very poor precision and recall when predicting closure. It also maintains a very similar f1 score when predicting a business is operating.  
 
 
 
@@ -435,7 +436,7 @@ I find that the difference between Urban and Rural accuracy is significant at th
 <iframe src="assets/fairnessRuralUrban.html" width="600" height="450" frameborder="0"></iframe>
 
 
-I also test whether there is a significant difference in prediction accuracy between semi-Urban and Urban. I fail to reject the null hypothesis at the 1% level with a p-value of 0.051. This suggests that there is not a significant difference in prediction accuracy between urban and semi-urban locations and that the model is fair between these two categories. The results of the premutation test is shown below
+I also test whether there is a significant difference in prediction accuracy between semi-Urban and Urban. I fail to reject the null hypothesis at the 1% level with a p-value of 0.051. This suggests that there is not a significant difference in prediction accuracy between urban and semi-urban locations and that the model is fair between these two categories. The results of the permutation test is shown below
 
 
 <iframe src="assets/fairnessUrbanSemi.html" width="600" height="450" frameborder="0"></iframe>
@@ -453,4 +454,4 @@ There seems to be significant evidence that in some ways the model isn't complet
 
 ## Conclusions
 
-In this project I have examined location closure in Hawaii using a variety of statistical analyses. I have confirmed many hypothesized results, such as closed locations having a lower average rating than opened businesses. Finally, I built a prediction model which is moderately good at predicting closure, but is somewhat limited because of the unbalanced sample and a lack of strong features. 
+In this project I have examined location closure in Hawaii using a variety of statistical analyses. I have confirmed many hypothesized results, such as closed locations having a lower average rating than open businesses. Finally, I built a prediction model which is moderately good at predicting closure, but is somewhat limited because of the unbalanced sample and a lack of strong features. 
