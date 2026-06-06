@@ -293,14 +293,13 @@ Some of the significant correlations from this matrix are closure status and the
 
 
 
-
 ## Assessment of Missingness
 
 
  
 
 
-One important consideration for this dataset is the missingness of various data. Particularly, important variables like price and description are mostly missing. For price, it is likely that it is not missing at random. Locations which have no cost or a very low cost are more likely to be missing than highly expensive restaurants. Particularly, reviewers from low cost locations are less likely to note the price in their review or post information such as the menu which Google uses to categorize the price. Therefore it is reasonable to say that price's missingness depends on the price itself.
+One important consideration for this dataset is the missingness of various data. Particularly, important variables like price and description are mostly missing. For price, it is likely that it is not missing at random (NMAR). Locations which have no cost or a very low cost are more likely to be missing than highly expensive restaurants. Particularly, reviewers from low cost locations are less likely to note the price in their review or post information such as the menu which Google uses to categorize the price. Therefore it is reasonable to say that price's missingness depends on the price itself.
 
 
 
@@ -352,13 +351,13 @@ I conduct hypothesis testing to examine whether rate of closure differs by price
 First, I test whether the difference in the rate of closure is the same across price categories. To do this, I compare each pair of price categories with a difference in means to test with the null hypothesis that the difference between the means is zero and the alternative hypothesis that the difference is not equal to zero. 
 
 
-The results align with what was seen in the exploratory data analysis, particularly that the difference is not too large except for the difference between one $ and three \$\$\$ which is significant at the 5% level.
+The results align with what was seen in the exploratory data analysis, particularly that the difference is not too large except for the difference between one $ and three \$\$\$ which is significant at the 5% level with a p-value of 0.04.
 
 
 I also test whether the mean average rating of closed business is the same as operating business. To do this, again I use a difference in means t test with the null that the difference in means is zero versus the alternative hypothesis that the difference is not equal to zero. 
 
 
-This test strongly rejects the null hypothesis at the 1% level. This is evidence that the average rating of operating locations is higher than the average rating of closed locations; the observed difference is 0.155. This aligns with what would be expected, closed locations having worse ratings on average than operating locations which indicates that quality may have an impact on location closure. As further evidence of this difference, I plot the empirical probability density function for each category below; closed locations' density is located towards lower ratings than operating locations' density.
+This test strongly rejects the null hypothesis at the 1% level with a p-value of 3.76e-27. This is evidence that the average rating of operating locations is higher than the average rating of closed locations; the observed difference is 0.155. This aligns with what would be expected, closed locations having worse ratings on average than operating locations which indicates that quality may have an impact on location closure. As further evidence of this difference, I plot the empirical probability density function for each category below; closed locations' density is located towards lower ratings than operating locations' density.
 
 
 <iframe src="assets/avgRatingsClosurePDF.html" width="600" height="450" frameborder="0"></iframe>
@@ -378,7 +377,7 @@ An important consideration for business owners is the risk of closure for their 
 ## Baseline Model
 
 
-As a baseline model for prediction I use logistic regression with price and number of competitors. I chose to not include variables such as the number of days the location is open and its average hours, since naturally closed businesses will have no days open. The information that the location has no days open would not be available at time of prediction, so I do not include it. I choose to one hot encode price category even though it is ordinal because much of the price information is missing; an ordinal encoding would not work since 'missing' does not fit well into the ordinal scheme. I also simply standardize the number of competitors which is a numerical variable. I choose logistic regression as a baseline because it is a simple and interpretable model which does not require hyperparameter tuning. The result of this model is a macro f1 score of 0.539, notably dragged down by the f1 score of 0.213 when the model predicts a location is closed. The confusion matrix is shown below.
+As a baseline model for prediction I use logistic regression with price and number of competitors. I chose to not include variables such as the number of days the location is open and its average hours, since naturally closed businesses will have no days open. The information that the location has no days open would not be available at time of prediction, so I do not include it. I choose to one hot encode price category even though it is ordinal because much of the price information is missing; an ordinal encoding would not work since 'missing' does not fit well into the ordinal scheme. I also simply standardize the number of competitors which is a numerical variable. There is one nominal variable (price) and one discrete quantitative variable (number of competitors). As stated before, I am encoding price as nominal in this model. I choose logistic regression as a baseline because it is a simple and interpretable model which does not require hyperparameter tuning. The result of this model is a macro f1 score of 0.539, notably dragged down by the f1 score of 0.213 when the model predicts a location is closed. The confusion matrix is shown below.
 
 
 |                |   Predict Operating |   Predict Closed |
